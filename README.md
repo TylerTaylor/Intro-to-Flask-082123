@@ -48,3 +48,11 @@ if __name__ == '__main__':
         cd server
         flask run
         ```
+
+### Setting up the DB
+
+```
+flask db init
+flask db migrate -m "Some message"
+flask db upgrade
+```
