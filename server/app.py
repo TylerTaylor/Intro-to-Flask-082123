@@ -4,7 +4,7 @@ from flask import Flask, make_response #, request
 from flask_migrate import Migrate
 
 # import db from models
-from models import db
+from models import db, Doctor, Patient, Appointment
 
 app = Flask(__name__)
 
@@ -19,22 +19,31 @@ migrate = Migrate(app, db)
 # initialize the flask app
 db.init_app(app)
 
-# Code here
-@app.route('/')
-def index():
-    # print("")
-    # print("")
-    # print(request.headers)
-    resp = make_response("<h1>Hello World</h1>", 200)
-    print(resp)
+@app.route('/doctors/<int:id>')
+def doctor_by_id(id):
+    doctor = Doctor.query.filter_by(id = id).first()
 
-    return resp
-    # return "<h1>Hello World</h1>"
+    if doctor:
+        response_body = doctor.to_dict()
+        status_code = 200
+    else:
+        response_body = {"message" : f"{doctor.id} not found"}
+        status_code = 404
+    
+    return make_response(response_body, status_code)
 
-@app.route('/users/<int:username>')
-def user(username):
-    print(username)
-    return f"<h1>Welcome {username}!</h1>"
+@app.route('/doctors')
+def doctors():
+    doctors = Doctor.query.all()
+
+    response_body = [doctor.to_dict() for doctor in doctors]
+
+    # response_body = '<h2>Look at all these doctors</h2>'
+
+    # for doctor in doctors:
+    #     response_body += f'<p>{doctor.name}</p>'
+
+    return make_response(response_body, 200)
 
 # run python app.py
 if __name__ == '__main__':
