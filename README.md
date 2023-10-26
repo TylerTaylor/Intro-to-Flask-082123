@@ -56,3 +56,10 @@ flask db init
 flask db migrate -m "Some message"
 flask db upgrade
 ```
+
+
+# Relationships
+
+- `Foreign Key` - lives in the table that belongs to another table (the "many")
+- `relationship()` - binds our two models together, informs them about the relationship to the other
+- `back_populates` - it establishes a two way relationship between the models

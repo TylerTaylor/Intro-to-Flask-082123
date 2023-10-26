@@ -129,7 +129,7 @@ class PatientById(Resource):
             resp = patient.to_dict()
             status_code = 200
         else:
-            resp = { "message" : f"Patient {id} not found"}
+            resp = { "message" : f"Patient {id} not found" }
             status_code = 404
 
         return make_response(resp, status_code)
